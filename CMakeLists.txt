@@ -13,7 +13,9 @@ set(PROTO_FILES ${CMAKE_SOURCE_DIR}/protobuf/joystick-data.proto)
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_FILES})
 
 # remote-joy executable
-set(EXEC_SOURCE_FILES ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/main.cpp)
+set(EXEC_SOURCE_FILES ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/main.cpp
+                      ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/joystick_data.h
+)
 add_executable(remote-joy ${EXEC_SOURCE_FILES} ${PROTO_SRCS} ${PROTO_HDRS})
-target_include_directories(remote-joy PRIVATE ${CMAKE_SOURCE_DIR}/third-party/CLI11 ${CMAKE_BINARY_DIR})
+target_include_directories(remote-joy PRIVATE ${CMAKE_SOURCE_DIR}/third-party/CLI11 ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/third-party/tabulate)
 target_link_libraries(remote-joy PRIVATE protobuf::libprotobuf SDL2::SDL2)
