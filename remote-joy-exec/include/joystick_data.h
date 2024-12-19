@@ -6,10 +6,17 @@
 // tabulate
 #include "tabulate.hpp"
 
+// protobuf
+#include "joystick-data.pb.h"
+
+// sdl2
+#include <SDL_joystick.h>
+
 namespace remote_joy
 {
 
-struct JoystickData
+// TODO: Remove this unnecesary structure
+struct JoystickDisplayData
 {
   uint8_t index;
   std::string name;
@@ -21,7 +28,9 @@ struct JoystickData
   std::string productID;   // Product ID (if available)
 };
 
+void parseJoysticks(const std::vector<SDL_Joystick*>& joysticks, JoysticksState& joystickState);
 
-void renderJoysticksInfo(std::vector<JoystickData>& joysticks);
+// TODO: Change signature
+void renderJoysticksInfo(std::vector<JoystickDisplayData>& joysticks);
 
 }

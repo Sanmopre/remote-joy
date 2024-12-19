@@ -18,6 +18,8 @@
 #include "joystick_data.h"
 #include "udp-connector.h"
 
+// TODO: Clean main and handle SDL joysticks by events not in that while loop
+
 int main(int argc, char **argv)
 {
   CLI::App app("Joystick UDP data sender.");
@@ -29,7 +31,7 @@ int main(int argc, char **argv)
     return -1;
   }
   SDL_JoystickEventState(SDL_ENABLE);
-  std::vector<remote_joy::JoystickData> joysticks;
+  std::vector<remote_joy::JoystickDisplayData> joysticks;
 
   while(SDL_NumJoysticks() == 0)
   {
@@ -40,7 +42,7 @@ int main(int argc, char **argv)
   const int numJoysticks = SDL_NumJoysticks();
 
   for (int i = 0; i < numJoysticks; ++i) {
-    remote_joy::JoystickData data;
+    remote_joy::JoystickDisplayData data;
     data.index = i;
 
     // Open joystick
