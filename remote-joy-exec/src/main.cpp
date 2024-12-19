@@ -3,6 +3,8 @@
 
 // std
 #include <string>
+#include <thread>
+#include <chrono>
 
 // protobuf
 #include "joystick-data.pb.h"
@@ -23,14 +25,19 @@ int main(int argc, char **argv)
 
   if (SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) != 0)
   {
-    std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
+    std::cout << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
     return -1;
   }
   SDL_JoystickEventState(SDL_ENABLE);
   std::vector<remote_joy::JoystickData> joysticks;
 
-  int numJoysticks = SDL_NumJoysticks();
-  std::cout << "Number of joysticks connected: " << numJoysticks << std::endl;
+  while(SDL_NumJoysticks() == 0)
+  {
+    std::cout << "No Joysticks connected" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    SDL_JoystickUpdate();
+  }
+  const int numJoysticks = SDL_NumJoysticks();
 
   for (int i = 0; i < numJoysticks; ++i) {
     remote_joy::JoystickData data;
@@ -39,7 +46,7 @@ int main(int argc, char **argv)
     // Open joystick
     SDL_Joystick* joystick = SDL_JoystickOpen(i);
     if (!joystick) {
-      std::cerr << "Failed to open joystick " << i << ": " << SDL_GetError() << std::endl;
+      std::cout << "Failed to open joystick " << i << ": " << SDL_GetError() << std::endl;
       continue;
     }
 

@@ -1,7 +1,10 @@
 syntax = "proto3";
 
-message JoystickInput
-{
+message JoystickInput {
     repeated float axes = 1;      // Array of axis values
     repeated bool buttons = 2;    // Array of button states (true for pressed, false for released)
+}
+
+message JoystickState {
+    repeated JoystickInput joysticks = 1; // Array of joystick inputs
 }
