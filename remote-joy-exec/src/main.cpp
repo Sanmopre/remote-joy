@@ -9,6 +9,7 @@
 
 #include "sdl-manager.h"
 #include "udp-sender.h"
+#include "joystick_data.h"
 
 // TODO: Clean main and handle SDL joysticks by events not in that while loop
 
@@ -24,7 +25,7 @@ int main(int argc, char **argv)
   while(running)
   {
     running = sdlManager.update();
-    udpSender.send("testing sending");
+    udpSender.send(remote_joy::parseJoysticks(sdlManager.getJoysticks()));
   }
 
   return 0;

@@ -12,9 +12,11 @@ namespace
     }
 }
 
-void parseJoysticks(const std::vector<SDL_Joystick*> &joysticks, JoysticksState &joystickState)
+std::string  parseJoysticks(const std::vector<JoystickDataStruct> &joysticks)
 {
-    for (const auto joystick : joysticks)
+    JoysticksState joystickState;
+
+    for (const auto [joystick, id] : joysticks)
     {
         auto* joystickInput = joystickState.add_joysticks();
 
@@ -31,6 +33,8 @@ void parseJoysticks(const std::vector<SDL_Joystick*> &joysticks, JoysticksState 
             joystickInput->add_buttons(SDL_JoystickGetButton(joystick, i));
         }
     }
+
+    return joystickState.SerializeAsString();
 }
 
 void renderJoysticksInfo(const std::vector<SDL_Joystick*> &joysticks)

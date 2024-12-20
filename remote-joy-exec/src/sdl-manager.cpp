@@ -65,19 +65,10 @@ void SDLManager::handleJoystickEvents()
         switch (event.type)
         {
             case SDL_JOYAXISMOTION:
-                std::cout << "Joystick " << event.jaxis.which
-                          << " axis " << static_cast<int>(event.jaxis.axis)
-                          << " value: " << event.jaxis.value << std::endl;
                 break;
             case SDL_JOYBUTTONDOWN:
-                std::cout << "Joystick " << event.jbutton.which
-                          << " button " << static_cast<int>(event.jbutton.button)
-                          << " pressed." << std::endl;
                 break;
             case SDL_JOYBUTTONUP:
-                std::cout << "Joystick " << event.jbutton.which
-                          << " button " << static_cast<int>(event.jbutton.button)
-                          << " released." << std::endl;
                 break;
             case SDL_JOYDEVICEADDED: {
                 JoystickDataStruct joystickData {};
@@ -102,8 +93,7 @@ void SDLManager::handleJoystickEvents()
     }
 }
 
-bool SDLManager::update()
-{
+bool SDLManager::update() {
     handleJoystickEvents();
 
     SDL_Event event;
@@ -114,4 +104,8 @@ bool SDLManager::update()
     }
     return true;
 }
+const std::vector<JoystickDataStruct> &SDLManager::getJoysticks() const
+{
+    return joysticks_;
 }
+} // namespace remote_joy

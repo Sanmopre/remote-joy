@@ -22,6 +22,7 @@ public:
     ~SDLManager();
 
     bool update();
+    [[nodiscard]] const std::vector<JoystickDataStruct>& getJoysticks() const;
 
 private:
 
