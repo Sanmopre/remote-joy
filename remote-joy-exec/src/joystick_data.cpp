@@ -6,13 +6,13 @@ namespace remote_joy
 
 namespace
 {
-    [[nodiscard]] float normalizeAxis(Sint16 axis)
+    [[nodiscard]] float normalizeAxis(const Sint16 axis)
     {
         return static_cast<float>(axis) / 32768.0f;
     }
 }
 
-void parseJoysticks(const std::vector<SDL_Joystick *> &joysticks, JoysticksState &joystickState)
+void parseJoysticks(const std::vector<SDL_Joystick*> &joysticks, JoysticksState &joystickState)
 {
     for (const auto joystick : joysticks)
     {
@@ -33,28 +33,27 @@ void parseJoysticks(const std::vector<SDL_Joystick *> &joysticks, JoysticksState
     }
 }
 
-// TODO: Make the input be std::vector<SDL_Joystick *> &joysticks since we can get all the needed info from there without the middle structure
-void renderJoysticksInfo(std::vector<JoystickDisplayData> &joysticks)
+void renderJoysticksInfo(const std::vector<SDL_Joystick*> &joysticks)
 {
     tabulate::Table joysticksTable;
     joysticksTable.add_row(tabulate::Table::Row_t{"Index", "Name", "Axis", "Buttons", "Directional pads","Track balls", "Vendor", "Product"});
 
     for(const auto& joystick : joysticks)
     {
-        joysticksTable.add_row(tabulate::Table::Row_t{std::to_string(joystick.index),
-          joystick.name, std::to_string(joystick.axisCount),
-          std::to_string(joystick.buttonCount)
-          ,  std::to_string(joystick.hatCount),
-       std::to_string(joystick.ballCount) ,
-    joystick.vendorID ,
-        joystick.productID
+        joysticksTable.add_row(tabulate::Table::Row_t{std::to_string(SDL_JoystickInstanceID(joystick)),
+          SDL_JoystickName(joystick), std::to_string(SDL_JoystickNumAxes(joystick)),
+          std::to_string(SDL_JoystickNumButtons(joystick)),
+            std::to_string(SDL_JoystickNumHats(joystick)),
+            std::to_string(SDL_JoystickNumBalls(joystick)) ,
+            std::to_string(SDL_JoystickGetVendor(joystick)),
+            std::to_string(SDL_JoystickGetProduct(joystick)),
       });
     }
 
     joysticksTable.column(1).format().font_align(tabulate::FontAlign::left);
-    for (size_t i = 0; i < joysticksTable[0].size(); ++i)
+    for (auto & column : joysticksTable[0])
     {
-        joysticksTable[0][i]
+        column
             .format()
             .font_color(tabulate::Color::yellow)
             .font_align(tabulate::FontAlign::center)

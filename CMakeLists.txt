@@ -20,6 +20,8 @@ set(EXEC_SOURCE_FILES ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/main.cpp
                       ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/joystick_data.cpp
                       ${CMAKE_SOURCE_DIR}/remote-joy-exec/include/udp-connector.h
                       ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/udp-connector.cpp
+                      ${CMAKE_SOURCE_DIR}/remote-joy-exec/include/sdl-manager.h
+                      ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/sdl-manager.cpp
 )
 add_executable(remote-joy ${EXEC_SOURCE_FILES} ${PROTO_SRCS} ${PROTO_HDRS})
 target_include_directories(remote-joy PRIVATE ${CMAKE_SOURCE_DIR}/third-party/CLI11 ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/third-party/tabulate ${CMAKE_SOURCE_DIR}/remote-joy-exec/include ${CMAKE_SOURCE_DIR}/third-party/enet/include)

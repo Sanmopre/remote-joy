@@ -29,14 +29,4 @@ private:
     ENetPeer* enetPeer;
 };
 
-class UdpReceiver : public UdpConnector {
-public:
-    UdpReceiver(const std::string& hostIp, uint16_t hostPort, const std::string& clientIp, uint16_t clientPort);
-    ~UdpReceiver();
-
-    void listen() const;
-
-private:
-    ENetHost* enetHost;
-};
 }
