@@ -8,8 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 find_package(Protobuf REQUIRED)
 find_package(SDL2 REQUIRED)
 
-add_subdirectory(third-party/enet)
-
 # protobuf
 set(PROTO_FILES ${CMAKE_SOURCE_DIR}/protobuf/joystick-data.proto)
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_FILES})
@@ -18,11 +16,11 @@ protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_FILES})
 set(EXEC_SOURCE_FILES ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/main.cpp
                       ${CMAKE_SOURCE_DIR}/remote-joy-exec/include/joystick_data.h
                       ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/joystick_data.cpp
-                      ${CMAKE_SOURCE_DIR}/remote-joy-exec/include/udp-connector.h
-                      ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/udp-connector.cpp
+                      ${CMAKE_SOURCE_DIR}/remote-joy-exec/include/udp-sender.h
+                      ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/udp-sender.cpp
                       ${CMAKE_SOURCE_DIR}/remote-joy-exec/include/sdl-manager.h
                       ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/sdl-manager.cpp
 )
 add_executable(remote-joy ${EXEC_SOURCE_FILES} ${PROTO_SRCS} ${PROTO_HDRS})
-target_include_directories(remote-joy PRIVATE ${CMAKE_SOURCE_DIR}/third-party/CLI11 ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/third-party/tabulate ${CMAKE_SOURCE_DIR}/remote-joy-exec/include ${CMAKE_SOURCE_DIR}/third-party/enet/include)
-target_link_libraries(remote-joy PRIVATE protobuf::libprotobuf SDL2::SDL2 enet)
+target_include_directories(remote-joy PRIVATE ${CMAKE_SOURCE_DIR}/third-party/CLI11 ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/third-party/tabulate ${CMAKE_SOURCE_DIR}/remote-joy-exec/include)
+target_link_libraries(remote-joy PRIVATE protobuf::libprotobuf SDL2::SDL2)

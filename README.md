@@ -9,4 +9,3 @@ Remote joy is an application that allows for easy integration of remote joystick
 | Protobuf | v29.1 | https://github.com/protocolbuffers/protobuf/releases/tag/v29.1 |
 | SDL2 | V2.30.10 | https://github.com/libsdl-org/SDL/releases/tag/release-2.30.10 |
 | tabulate | v1.5 | https://github.com/p-ranav/tabulate/releases/tag/v1.5 |
-| enet | v1.3.18 | https://github.com/lsalzman/enet?tab=readme-ov-file |
