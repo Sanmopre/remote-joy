@@ -11,8 +11,6 @@
 #include "udp-sender.h"
 #include "joystick_data.h"
 
-// TODO: Clean main and handle SDL joysticks by events not in that while loop
-
 int main(int argc, char **argv)
 {
   CLI::App app("Joystick UDP data sender.");

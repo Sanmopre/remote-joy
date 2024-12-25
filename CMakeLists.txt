@@ -26,3 +26,13 @@ set(EXEC_SOURCE_FILES ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/main.cpp
 add_executable(remote-joy ${EXEC_SOURCE_FILES} ${PROTO_SRCS} ${PROTO_HDRS})
 target_include_directories(remote-joy PRIVATE ${CMAKE_SOURCE_DIR}/third-party/CLI11 ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/third-party/tabulate ${CMAKE_SOURCE_DIR}/remote-joy-exec/include)
 target_link_libraries(remote-joy PRIVATE protobuf::libprotobuf absl::log_internal_check_op SDL2::SDL2)
+
+
+# joy-consumer lib
+set(LIB_SOURCE_FILES ${CMAKE_SOURCE_DIR}/remote-joy-exec/src/joystick-consumer.cpp
+        ${CMAKE_SOURCE_DIR}/remote-joy-exec/include/joystick-consumer.h
+)
+
+add_library(joy-consumer STATIC ${LIB_SOURCE_FILES} ${PROTO_SRCS} ${PROTO_HDRS})
+target_include_directories(joy-consumer PRIVATE ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/remote-joy-exec/include)
+target_link_libraries(joy-consumer PRIVATE protobuf::libprotobuf absl::log_internal_check_op)
