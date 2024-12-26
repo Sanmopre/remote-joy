@@ -1,22 +1,23 @@
 #pragma once
 
+// std
 #include <cstdint>
+#include <memory>
 #include <string>
-#include <iostream>
-#include <thread>
-#include <cstring>
+#include <mutex>
+
 
 // Platform-specific includes
 #ifdef _WIN32
 #include <winsock2.h>
 #else
-#include <sys/socket.h>
 #include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
 #endif
 
-namespace remote_joy {
+class JoystickInput;
+
+namespace remote_joy
+{
 
 class JoystickConsumer
 {
@@ -28,14 +29,18 @@ private:
     void receiveLoop();
 
 private:
+    // udp commmunications variables
     const std::string remoteSenderIp_;
     const std::string receiveIp_;
     const uint16_t receivePort_;
     int socketFd_;
-
 #ifdef _WIN32
     WSADATA wsaData_;
 #endif
+
+    std::shared_ptr<JoystickInput> joystickInput_;
+    std::mutex mutex_;
+    const size_t bufferSize = 2048;
 };
 
 } // namespace remote_joy
